@@ -1,19 +1,19 @@
 'use client'
 import { useState, useEffect, useCallback, useRef } from "react";
 import { FaPaperPlane, FaPaperclip, FaLock } from 'react-icons/fa';
+import Image from "next/image";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const Dash = ({ id, username, token}) => {
-	const [commando, setCommando] = useState("");
-  	const [gethonisMessage, setGethonisMessage] = useState({});
-  	const [userMessage, setUserMessage] = useState({});
-  	const [linesGeth, setLinesGeth] = useState([]); 
-  	const [lines, setLines] = useState([]); 
-  	const logEndRef = useRef(null);
+  	const chatContainerRef = useRef(null);
   	const [chat, setChat] = useState([]);
   	const [message, setMessage] = useState("");
+  	const [init, setInit] = useState(false);
 
 
 	const handleGettingMessage = async () => {
+	  setInit(true);
 	  if (!message.trim()) return;
 
 	  const updatedChat = [
@@ -36,8 +36,6 @@ const Dash = ({ id, username, token}) => {
 
 	  if (data.message) {
 	    let botMessage = data.message;
-
-	    // dacă API trimite array ca string, transformă-l în text curat
 	    if (typeof botMessage === "string" && botMessage.startsWith("[")) {
 	      try {
 	        const parsed = JSON.parse(botMessage);
@@ -55,36 +53,69 @@ const Dash = ({ id, username, token}) => {
 	};
 
 	useEffect(() => {
-	    logEndRef.current?.scrollIntoView({ behavior: "smooth" });
-	  }, [chat]);
+	  if (chatContainerRef.current) {
+	    chatContainerRef.current.scrollTo({
+	      top: chatContainerRef.current.scrollHeight,
+	      behavior: "smooth", // sau "auto" dacă vrei instant
+	    });
+	  }
+	}, [chat]);
 	return (
-		<section className="bg-black h-screen content-center">
-			<div className="w-full p-10 flex justify-center">
-				<div className="w-3xl h-auto p-5 rounded-lg">
-					<div className="w-full h-[500px] p-10 overflow-scroll rounded-lg no-scrollbar">
+		<section className="bg-black h-screen content-center no-scrollbar">
+			<div className="flex justify-center pt-10">
+				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
+				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-2xl font-monospace">Gethonis</h1>
+			</div>
+			<div className="w-full sm:pt-10 flex justify-center">
+				<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
+					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
 						{chat.map((c, i) => (
 						  <div
 						    key={i}
 						    className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}
 						  >	
 						  <div>
-						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span class="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span class="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
+						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
-						      className={`p-2 rounded-lg max-w-xs ${
-						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none" : "transition-colors border border-solid border-white/[.145] flex transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"
+						      className={`p-2 rounded-lg max-w-[250px] text-justify break-words whitespace-pre-wrap sm:max-w-md overflow-scroll no-scrollbar ${
+						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none" : "transition-colors border border-solid border-white/[.145] transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"
 						      }`}
 						    >
-						       {c.content}
+						    
+						    <ReactMarkdown
+							  remarkPlugins={[remarkGfm]}
+							  components={{
+							    code({node, inline, className, children, ...props}) {
+							      return !inline ? (
+							        <pre
+							          className="max-h-700 overflow-y-auto no-scrollbar bg-slate-900 text-white rounded-md p-5 my-5 text-sm"
+							          {...props}
+							        >
+							          <code className={className}>
+							            {children}
+							          </code>
+							        </pre>
+							      ) : (
+							        <code className={`bg-gray-200 px-1 rounded`} {...props}>
+							          {children}
+							        </code>
+							      );
+							    }
+							  }}
+							>
+							  {c.content}
+							</ReactMarkdown>
+
 						    </div>
 						  </div>
-						      </div>
+						 </div>
 						))}
 					</div>
 						      <form onSubmit={(e) => { 
-  e.preventDefault();
-  handleGettingMessage(); 
-}}>
-					<div className="w-full mt-5 p-2 border border-solid border-white/[.145] rounded-lg flex justify-center">
+					  e.preventDefault();
+					  handleGettingMessage(); 
+					}}>
+					<div className="w-full mt-5 p-2 border border-solid border-white/[.145] shadow-white shadow-md/10 rounded-lg flex justify-center">
 						
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
@@ -104,7 +135,7 @@ const Dash = ({ id, username, token}) => {
 			            </button>
 						      
 					</div>
-						      </form>
+				</form>
 				</div>
 			</div>
 		</section>
