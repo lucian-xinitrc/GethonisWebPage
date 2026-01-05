@@ -82,7 +82,7 @@ const Dash = ({ id, username, token}) => {
 						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-sm font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-solid text-heading text-sm font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
 						      className={`p-2 rounded-lg max-w-xs  break-words whitespace-pre-wrap sm:max-w-xl no-scrollbar ${
-						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-md sm:text-base h-auto p-2 px-5 w-full overflow-scroll text-md focus:outline-none" : "transition-colors transition duration-700 ease-in-out font-bold text-md sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-md focus:outline-none"
+						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-md sm:text-base h-auto p-2 px-5 w-full overflow-scroll text-md focus:outline-none" : "transition-colors transition duration-700 ease-in-out font-bold text-md sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-md focus:outline-none"
 						      }`}
 						    >
 						    
