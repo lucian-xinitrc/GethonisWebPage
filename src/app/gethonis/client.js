@@ -61,9 +61,14 @@ const Dash = ({ id, username, token}) => {
 	}, [chat]);
 	return (
 		<section className="bg-black w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
-			<div className="flex justify-center sm:pt-10">
+			<div className="flex justify-center bg-transparent">
 				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
-				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-2xl font-monospace">Gethonis</h1>
+				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-3xl font-monospace">Gethonis</h1>
+				
+
+			</div>
+			<div className="flex justify-center bg-transparent pt-10">
+			{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the AI made for excellence!</h3>) : ("") }
 			</div>
 			<div className="w-full sm:pt-10 flex justify-center">
 				<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
@@ -71,13 +76,13 @@ const Dash = ({ id, username, token}) => {
 						{chat.map((c, i) => (
 						  <div
 						    key={i}
-						    className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}
+						    className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-5`}
 						  >	
 						  <div>
-						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
+						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-sm font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-solid text-heading text-sm font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
-						      className={`p-2 rounded-lg max-w-xs break-words whitespace-pre-wrap sm:max-w-xl overflow-scroll no-scrollbar ${
-						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full sm:text-[15px] focus:outline-none" : "transition-colors  transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"
+						      className={`p-2 rounded-lg max-w-xs  break-words whitespace-pre-wrap sm:max-w-xl no-scrollbar ${
+						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-md sm:text-base h-auto p-2 px-5 w-full overflow-scroll text-md focus:outline-none" : "transition-colors transition duration-700 ease-in-out font-bold text-md sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-md focus:outline-none"
 						      }`}
 						    >
 						    
@@ -87,7 +92,7 @@ const Dash = ({ id, username, token}) => {
 							    code({node, inline, className, children, ...props}) {
 							      return !inline ? (
 							        <pre
-							          className="max-h-700 overflow-y-auto no-scrollbar bg-slate-900 text-white rounded-md p-5 my-5 text-sm"
+							          className="max-h-700 overflow-y-auto no-scrollbar bg-slate-900 text-white rounded-md p-5 my-5 text-md"
 							          {...props}
 							        >
 							          <code className={className}>
@@ -126,7 +131,7 @@ const Dash = ({ id, username, token}) => {
 			              onChange={e => setMessage(e.target.value)}
 			              type="text"
 			              aria-describedby="helper-text-explanation" 
-			              className="transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"/>
+			              className="transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-md sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"/>
 			            <button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaPaperclip size={15} />
 			            </button>
