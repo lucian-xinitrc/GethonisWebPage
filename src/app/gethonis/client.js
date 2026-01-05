@@ -60,7 +60,7 @@ const Dash = ({ id, username, token}) => {
 	  }
 	}, [chat]);
 	return (
-		<section className="bg-black h-screen content-center no-scrollbar">
+		<section className="bg-black w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
 			<div className="flex justify-center sm:pt-10">
 				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
 				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-2xl font-monospace">Gethonis</h1>
@@ -76,8 +76,8 @@ const Dash = ({ id, username, token}) => {
 						  <div>
 						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
-						      className={`p-2 rounded-lg max-w-xs text-justify break-words whitespace-pre-wrap sm:max-w-xl overflow-scroll no-scrollbar ${
-						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full sm:text-[15px] focus:outline-none" : "transition-colors border border-solid border-white/[.145] transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"
+						      className={`p-2 rounded-lg max-w-xs break-words whitespace-pre-wrap sm:max-w-xl overflow-scroll no-scrollbar ${
+						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full sm:text-[15px] focus:outline-none" : "transition-colors  transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"
 						      }`}
 						    >
 						    
@@ -114,7 +114,8 @@ const Dash = ({ id, username, token}) => {
 					  e.preventDefault();
 					  handleGettingMessage(); 
 					}}>
-					<div className="w-full mt-5 p-2 border border-solid border-white/[.145] shadow-white shadow-md/10 rounded-lg flex justify-center">
+					<div className="w-full absolute bottom-0 left-0 sm:relative flex justify-center">
+					<div className="w-full flex justify-center w-auto m-5 mt-5 p-2 border border-solid border-white/[.145] shadow-white shadow-md/10 rounded-lg">
 						
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
@@ -134,8 +135,10 @@ const Dash = ({ id, username, token}) => {
 			            </button>
 						      
 					</div>
+					</div>
 				</form>
 				</div>
+
 			</div>
 		</section>
 	);
