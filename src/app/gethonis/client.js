@@ -68,7 +68,7 @@ const Dash = ({ id, username, token}) => {
 
 			</div>
 			<div className="flex justify-center bg-transparent pt-10">
-			{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the AI made for excellence!</h3>) : ("") }
+			{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the perfect squad!</h3>) : ("") }
 			</div>
 			<div className="w-full sm:pt-10 flex justify-center">
 				<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
