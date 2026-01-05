@@ -16,11 +16,13 @@ const Dash = ({ id, username, token}) => {
 	  setInit(true);
 	  if (!message.trim()) return;
 
+	  const placeholder = { role: "assistant", content: "Please wait..." };
+
 	  const updatedChat = [
 	    ...chat,
-	    { role: "user", content: message }
+	    { role: "user", content: message },
+	    placeholder
 	  ];
-
 	  setChat(updatedChat);
 	  setMessage("");
 
@@ -28,28 +30,25 @@ const Dash = ({ id, username, token}) => {
 	    method: "POST",
 	    headers: { "Content-Type": "application/json" },
 	    body: JSON.stringify({
-	      messages: updatedChat
+	      messages: updatedChat.slice(0, -1)
 	    }),
 	  });
 
-	  const data = await res.json();
+	  let data = await res.json();
 
-	  if (data.message) {
-	    let botMessage = data.message;
-	    if (typeof botMessage === "string" && botMessage.startsWith("[")) {
-	      try {
-	        const parsed = JSON.parse(botMessage);
-	        if (Array.isArray(parsed)) {
-	          botMessage = parsed.join("");
-	        }
-	      } catch {}
-	    }
-
-	    setChat(prev => [
-	      ...prev,
-	      { role: "assistant", content: botMessage }
-	    ]);
+	  let botMessage = data.message;
+	  if (typeof botMessage === "string" && botMessage.startsWith("[")) {
+	    try {
+	      const parsed = JSON.parse(botMessage);
+	      if (Array.isArray(parsed)) botMessage = parsed.join("");
+	    } catch {}
 	  }
+
+	  setChat(prev =>
+	    prev.map(msg =>
+	      msg === placeholder ? { ...msg, content: botMessage } : msg
+	    )
+	  );
 	};
 
 	useEffect(() => {
@@ -77,8 +76,8 @@ const Dash = ({ id, username, token}) => {
 						  <div>
 						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-default text-heading text-xs font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
-						      className={`p-2 rounded-lg max-w-[250px] text-justify break-words whitespace-pre-wrap sm:max-w-md overflow-scroll no-scrollbar ${
-						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none" : "transition-colors border border-solid border-white/[.145] transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"
+						      className={`p-2 rounded-lg max-w-xs text-justify break-words whitespace-pre-wrap sm:max-w-xl overflow-scroll no-scrollbar ${
+						        c.role === "user" ? "transition-colors border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full sm:text-[15px] focus:outline-none" : "transition-colors border border-solid border-white/[.145] transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"
 						      }`}
 						    >
 						    

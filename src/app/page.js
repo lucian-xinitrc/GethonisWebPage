@@ -36,7 +36,7 @@ export default function Home() {
             <form onSubmit={handleLogin}>
               <input 
                 type="text"
-                placeholder="Email"
+                placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="mt-8 rounded-2xl border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"
