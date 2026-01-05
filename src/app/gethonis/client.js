@@ -68,7 +68,7 @@ const Dash = ({ id, username, token}) => {
 			</div>
 			<div className="w-full sm:pt-10 flex justify-center">
 				<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
-					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
+					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[500px] sm:h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
 						{chat.map((c, i) => (
 						  <div
 						    key={i}
