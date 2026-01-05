@@ -62,7 +62,7 @@ const Dash = ({ id, username, token}) => {
 	}, [chat]);
 	return (
 		<section className="bg-black h-screen content-center no-scrollbar">
-			<div className="flex justify-center pt-10">
+			<div className="flex justify-center sm:pt-10">
 				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
 				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-2xl font-monospace">Gethonis</h1>
 			</div>
