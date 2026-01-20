@@ -1,4 +1,4 @@
-# 🚀 EasyPlight
+# 🚀 Gethonis Web Page
 ### Gethonis's Official ChatBOT WebPage
 
 ## 📚 Table of Contents
