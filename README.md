@@ -95,6 +95,6 @@ Name: Lucian-Florin Cusmir
 
 Github: [github.com/lucian-xinitrc](https://github.com/lucian-xinitrc)
 
-Linkedin: [/in/lucian-florin-cusmir-fullstackdev-](https://www.linkedin.com/in/lucian-florin-cusmir-fullstackdev/)
+Linkedin: [/in/lucian-florin-cusmir-fullstackdev-](https://www.linkedin.com/in/lucian-florin-cusmir)
 
 Email: cusmirlucian@gmail.com
