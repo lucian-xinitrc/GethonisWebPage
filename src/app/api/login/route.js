@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { decrypt, encrypt } from '../crypto.js';
 import { Pool } from 'pg';
 
+
 const pool = new Pool({
 	connectionString: process.env.DATABASE_URL,
 	ssl: { rejectUnauthorized: false },
