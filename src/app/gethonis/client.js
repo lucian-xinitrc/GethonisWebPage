@@ -42,10 +42,13 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 		const decoder = new TextDecoder("utf-8");
 
 		let botMessage = "";
-		let dirty = false;
 
-		setInterval(() => {
-		  if (!dirty) return;
+		while (true) {
+		  const { value, done } = await reader.read();
+		  if (done) break;
+
+		  const chunk = decoder.decode(value, { stream: true });
+		  botMessage += chunk;
 
 		  setChat(prev =>
 		    prev.map(msg =>
@@ -54,17 +57,6 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 		        : msg
 		    )
 		  );
-
-		  dirty = false;
-		}, 40);
-
-		while (true) {
-		  const { value, done } = await reader.read();
-		  if (done) break;
-
-		  const chunk = decoder.decode(value, { stream: true });
-		  botMessage += chunk;
-		  dirty = true;
 		}
 
 	  	/* 
@@ -88,10 +80,10 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 	  }
 	}, [chat]);
 	return (
-		<section className="bg-black w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
+		<section className="bg-slate-950 w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
 			<div className="h-auto">
-			<div className="flex justify-center bg-transparent">
-				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
+			<div className="flex justify-center bg-transparent pt-5">
+				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px]" width={50} height={50}/>
 				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-3xl font-monospace">Gethonis</h1>
 				
 
@@ -100,8 +92,8 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 			{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the perfect squad!</h3>) : ("") }
 			</div>
 			<div className="w-full sm:pt-10 flex justify-center">
-				<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
-					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[500px] sm:h-[500px] md:h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
+				<div className="w-full sm:w-3xl mh-auto p-2 sm:p-5 rounded-lg ">
+					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[500px] sm:h-[500px] md:h-[300px] 2xl:h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
 						{chat.map((c, i) => (
 						  <div
 						    key={i}
@@ -148,8 +140,8 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					  e.preventDefault();
 					  handleGettingMessage(); 
 					}}>
-					<div className="w-full absolute bottom-0 left-0 sm:relative flex justify-center">
-					<div className="w-full flex justify-center w-auto m-5 mt-5 p-2 border border-solid border-white/[.145] shadow-white shadow-md/10 rounded-lg">
+					<div className="w-full absolute bottom-0 left-0 md:relative flex justify-center">
+					<div className="w-full flex justify-center w-auto m-5 mt-5 p-2 border border-solid border-white/[.145] shadow-gray-900 shadow-md/10 rounded-lg">
 						
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />

@@ -61,7 +61,7 @@ export default function Home() {
   }
 
   return (
-    <section className="bg-black w-full h-screen content-center">
+    <section className="bg-slate-950 w-full h-screen content-center">
       <div className="w-full h-auto flex justify-center">
         <div className="w-auto sm:border border-solid border-white/[.145] sm:rounded-lg shadow-white sm:shadow-md/10 sm:px-10 sm:pt-30 sm:pb-10">
           <div className="w-full p-5 block h-auto block justify-inherit">
