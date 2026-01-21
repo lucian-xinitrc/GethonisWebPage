@@ -5,7 +5,7 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const Dash = ({ id, username, token}) => {
+const Dash = ({ id, username, token, gethoniskey}) => {
   	const chatContainerRef = useRef(null);
   	const [chat, setChat] = useState([]);
   	const [message, setMessage] = useState("");
@@ -13,42 +13,70 @@ const Dash = ({ id, username, token}) => {
 
 
 	const handleGettingMessage = async () => {
-	  setInit(true);
-	  if (!message.trim()) return;
+		setInit(true);
+	  	if (!message.trim()) return;
 
-	  const placeholder = { role: "assistant", content: "Please wait..." };
+	  	const placeholder = { role: "assistant", content: "Thinking..." };
 
-	  const updatedChat = [
-	    ...chat,
-	    { role: "user", content: message },
-	    placeholder
-	  ];
-	  setChat(updatedChat);
-	  setMessage("");
+	  	const updatedChat = [
+	    	...chat,
+	    	{ role: "user", content: message },
+	    	placeholder
+	  	];
+	  	setChat(updatedChat);
+	  	setMessage("");
 
-	  const res = await fetch("/api/gethonisAPI", {
-	    method: "POST",
-	    headers: { "Content-Type": "application/json" },
-	    body: JSON.stringify({
-	      messages: updatedChat.slice(0, -1)
-	    }),
-	  });
+	    const res = await fetch('https://api.gethonis.com/api/gethonis', {
+	      method: 'POST',
+	      headers: {
+	        'Content-Type': 'application/json',
+	      },
+	      body: JSON.stringify({
+	        headers: gethoniskey,
+	        messages: updatedChat.slice(0, -1),
+	        stream: true
+	      }),
+	    });
+  		
+  		const reader = res.body.getReader();
+		const decoder = new TextDecoder("utf-8");
 
-	  let data = await res.json();
+		let botMessage = "";
+		let dirty = false;
 
-	  let botMessage = data.message;
-	  if (typeof botMessage === "string" && botMessage.startsWith("[")) {
-	    try {
-	      const parsed = JSON.parse(botMessage);
-	      if (Array.isArray(parsed)) botMessage = parsed.join("");
-	    } catch {}
-	  }
+		setInterval(() => {
+		  if (!dirty) return;
 
-	  setChat(prev =>
-	    prev.map(msg =>
-	      msg === placeholder ? { ...msg, content: botMessage } : msg
-	    )
-	  );
+		  setChat(prev =>
+		    prev.map(msg =>
+		      msg === placeholder
+		        ? { ...msg, content: botMessage }
+		        : msg
+		    )
+		  );
+
+		  dirty = false;
+		}, 40);
+
+		while (true) {
+		  const { value, done } = await reader.read();
+		  if (done) break;
+
+		  const chunk = decoder.decode(value, { stream: true });
+		  botMessage += chunk;
+		  dirty = true;
+		}
+
+	  	/* 
+	  	const result = await fetch("/api/saveChat", {
+	    	method: "POST",
+	    	headers: { "Content-Type": "application/json" },
+	    	body: JSON.stringify({
+	      		id,
+	      		messages: chat
+	    	}),
+	  	}); 
+	  	*/
 	};
 
 	useEffect(() => {
@@ -61,6 +89,7 @@ const Dash = ({ id, username, token}) => {
 	}, [chat]);
 	return (
 		<section className="bg-black w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
+			<div className="h-auto">
 			<div className="flex justify-center bg-transparent">
 				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
 				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-3xl font-monospace">Gethonis</h1>
@@ -72,7 +101,7 @@ const Dash = ({ id, username, token}) => {
 			</div>
 			<div className="w-full sm:pt-10 flex justify-center">
 				<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
-					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[500px] sm:h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
+					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[500px] sm:h-[500px] md:h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
 						{chat.map((c, i) => (
 						  <div
 						    key={i}
@@ -126,7 +155,7 @@ const Dash = ({ id, username, token}) => {
 			              <FaLock size={15} />
 			            </button>
 						<input type="text"
-			              placeholder="Ask me anythig!"
+			              placeholder="Ask me anything!"
 			              value={message}
 			              onChange={e => setMessage(e.target.value)}
 			              type="text"
@@ -144,6 +173,7 @@ const Dash = ({ id, username, token}) => {
 				</form>
 				</div>
 
+			</div>
 			</div>
 		</section>
 	);
