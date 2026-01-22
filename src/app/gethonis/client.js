@@ -26,38 +26,46 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 	  	setChat(updatedChat);
 	  	setMessage("");
 
-	    const res = await fetch('https://api.gethonis.com/api/gethonis', {
-	      method: 'POST',
-	      headers: {
-	        'Content-Type': 'application/json',
-	      },
-	      body: JSON.stringify({
-	        headers: gethoniskey,
-	        messages: updatedChat.slice(0, -1),
-	        stream: true
-	      }),
-	    });
+	    /*
+
+		    const res = await fetch('https://api.gethonis.com/api/gethonis', {
+		      method: 'POST',
+		      headers: {
+		        'Content-Type': 'application/json',
+		      },
+		      body: JSON.stringify({
+		        headers: gethoniskey,
+		        messages: updatedChat.slice(0, -1),
+		        stream: true
+		      }),
+		    });
+
+	    */
+
+	    const result = await fetch("/api/gethonisAPI", {
+	    	method: "POST",
+	    	headers: { "Content-Type": "application/json" },
+	    	body: JSON.stringify({
+	      		messages: updatedChat.slice(0, -1),
+	    	}),
+	  	}); 
   		
-  		const reader = res.body.getReader();
-		const decoder = new TextDecoder("utf-8");
+	    const raw = await result.json();
+	    const data = raw.message;
+	  	let botMessage = data;
+	  	if (typeof botMessage === "string" && botMessage.startsWith("[")) {
+	    	try {
+	      		const parsed = JSON.parse(botMessage);
+	      		if (Array.isArray(parsed)) 
+	      			botMessage = parsed.join("");
+	    	} catch {}
+	  	}
 
-		let botMessage = "";
-
-		while (true) {
-		  const { value, done } = await reader.read();
-		  if (done) break;
-
-		  const chunk = decoder.decode(value, { stream: true });
-		  botMessage += chunk;
-
-		  setChat(prev =>
-		    prev.map(msg =>
-		      msg === placeholder
-		        ? { ...msg, content: botMessage }
-		        : msg
-		    )
-		  );
-		}
+	  	setChat(prev =>
+	    	prev.map(msg =>
+	      		msg === placeholder ? { ...msg, content: botMessage } : msg
+	    	)
+	  	);
 
 	  	/* 
 	  	const result = await fetch("/api/saveChat", {
@@ -83,16 +91,16 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 		<section className="bg-slate-950 w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
 			<div className="h-auto">
 			<div className="flex justify-center bg-transparent pt-5">
-				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px]" width={50} height={50}/>
+				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
 				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-3xl font-monospace">Gethonis</h1>
 				
 
 			</div>
-			<div className="flex justify-center bg-transparent pt-10">
+			<div className="flex justify-center bg-transparent pt-5">
 			{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the perfect squad!</h3>) : ("") }
 			</div>
-			<div className="w-full sm:pt-10 flex justify-center">
-				<div className="w-full sm:w-3xl mh-auto p-2 sm:p-5 rounded-lg ">
+			<div className="w-full sm:pt-0 flex justify-center">
+				<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
 					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[500px] sm:h-[500px] md:h-[300px] 2xl:h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
 						{chat.map((c, i) => (
 						  <div
@@ -140,8 +148,8 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					  e.preventDefault();
 					  handleGettingMessage(); 
 					}}>
-					<div className="w-full absolute bottom-0 left-0 md:relative flex justify-center">
-					<div className="w-full flex justify-center w-auto m-5 mt-5 p-2 border border-solid border-white/[.145] shadow-gray-900 shadow-md/10 rounded-lg">
+					<div className="w-full absolute bottom-0 left-0 sm:relative flex justify-center">
+					<div className="w-full flex justify-center w-auto m-5 mt-5 p-2 border border-solid border-white shadow-gray shadow-md/10 rounded-lg">
 						
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
