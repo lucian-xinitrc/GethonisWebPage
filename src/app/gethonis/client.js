@@ -103,7 +103,9 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					
 
 			</div>
-
+		<div className="flex justify-center bg-transparent pt-5">
+				{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the perfect squad!</h3>) : ("") }
+				</div>
 		<div className={` ${init === false ? "" : "bottom-0 fixed mb-10"} w-full absolute left-0 flex justify-center`}>
 
 			<form onSubmit={(e) => { 
@@ -111,7 +113,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					  handleGettingMessage(); 
 					}}>
 					
-					<div className="sm:w-[700px] bg-black flex justify-center mt-5 p-2 border border-solid border-white/[.145] ransition duration-700 ease-in-out hover:shadow-white/[.145] shadow-lg/30 rounded-xl">
+					<div className="sm:w-[700px] bg-black flex justify-center mt-5 p-2 border border-solid border-white/[.145] ransition duration-700 ease-in-out hover:shadow-white/[.145] shadow-lg/30 rounded-full">
 						
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
@@ -126,7 +128,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 			            <button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[14px]">
 			              <FaPaperclip size={15} />
 			            </button>
-			            <button type="submit"  className="rounded-xl ml-2 w-12 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+			            <button type="submit"  className="rounded-full ml-2 w-20 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaPaperPlane size={15} />
 			            </button>
 						      
@@ -134,14 +136,14 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					</div>
 				</form>
 				</div>
-				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} mt-[10%] p-5 sm:mx-[30%] sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
+				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} mt-[20%] sm:mt-[10%] p-5 sm:mx-[30%] sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
 					{chat.map((c, i) => (
 						<div key={i} className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-5`}>	
 						  <div>
 						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-sm font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-solid text-heading text-sm font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
 						      className={`p-2 max-w-xs  break-words whitespace-pre-wrap sm:max-w-xl no-scrollbar ${
-						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full overflow-scroll text-sm focus:outline-none rounded-md" : "transition-colors transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"
+						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-sm h-auto p-2 px-5 w-full overflow-scroll text-sm focus:outline-none rounded-md" : "transition-colors transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"
 						      }`}
 						    >
 						    
@@ -151,7 +153,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 							    code({node, inline, className, children, ...props}) {
 							      return !inline ? (
 							        <pre
-							          className="max-h-700 overflow-y-auto no-scrollbar bg-slate-900 text-white rounded-md p-5 my-5 text-md"
+							          className="max-h-700 overflow-y-auto no-scrollbar bg-neutral-950 border border-white/[.145] text-white rounded-md p-5 my-5 text-md"
 							          {...props}
 							        >
 							          <code className={className}>
@@ -182,9 +184,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 		{/*
 			<div className="bg-black w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
 				
-				<div className="flex justify-center bg-transparent pt-5">
-				{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the perfect squad!</h3>) : ("") }
-				</div>
+				
 				<div className="w-full sm:pt-0 flex justify-center">
 					<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
 						
