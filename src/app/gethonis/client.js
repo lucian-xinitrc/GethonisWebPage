@@ -11,7 +11,14 @@ const Dash = ({ id, username, token, gethoniskey}) => {
   	const [message, setMessage] = useState("");
   	const [init, setInit] = useState(false);
 
+  	const endRef = useRef(null);
 
+	  useEffect(() => {
+	    endRef.current?.scrollIntoView({
+	      behavior: "smooth",
+	      block: "end",
+	    });
+	  }, [chat]);
 	const handleGettingMessage = async () => {
 		setInit(true);
 	  	if (!message.trim()) return;
@@ -88,30 +95,53 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 	  }
 	}, [chat]);
 	return (
-		<section className="bg-slate-950 w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
-			<div className="h-auto">
-			<div className="flex justify-center bg-transparent pt-5">
+		<>
+		<div className={` ${init === false ? "h-screen" : "h-auto"} bg-black w-auto overflow-hidden content-center no-scrollbar`}>
+			<div className={` ${init === false ? "" : "align-center fixed absolute"} w-full flex justify-center bg-black pt-3 pb-3 shadow-black shadow-lg/30`}>
 				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
 				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-3xl font-monospace">Gethonis</h1>
-				
+					
 
 			</div>
-			<div className="flex justify-center bg-transparent pt-5">
-			{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the perfect squad!</h3>) : ("") }
-			</div>
-			<div className="w-full sm:pt-0 flex justify-center">
-				<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
-					<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} w-full h-[500px] sm:h-[500px] md:h-[300px] 2xl:h-[700px] p-5 sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
-						{chat.map((c, i) => (
-						  <div
-						    key={i}
-						    className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-5`}
-						  >	
+
+		<div className={` ${init === false ? "" : "bottom-0 fixed mb-10"} w-full absolute left-0 flex justify-center`}>
+
+			<form onSubmit={(e) => { 
+					  e.preventDefault();
+					  handleGettingMessage(); 
+					}}>
+					
+					<div className="sm:w-[700px] bg-black flex justify-center mt-5 p-2 border border-solid border-white/[.145] ransition duration-700 ease-in-out hover:shadow-white/[.145] shadow-lg/30 rounded-xl">
+						
+						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+			              <FaLock size={15} />
+			            </button>
+						<input type="text"
+			              placeholder="Ask me anything!"
+			              value={message}
+			              onChange={e => setMessage(e.target.value)}
+			              type="text"
+			              aria-describedby="helper-text-explanation" 
+			              className="transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"/>
+			            <button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[14px]">
+			              <FaPaperclip size={15} />
+			            </button>
+			            <button type="submit"  className="rounded-xl ml-2 w-12 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+			              <FaPaperPlane size={15} />
+			            </button>
+						      
+					
+					</div>
+				</form>
+				</div>
+				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} mt-[10%] p-5 sm:mx-[30%] sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
+					{chat.map((c, i) => (
+						<div key={i} className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-5`}>	
 						  <div>
 						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-sm font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-solid text-heading text-sm font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
-						      className={`p-2 rounded-lg max-w-xs  break-words whitespace-pre-wrap sm:max-w-xl no-scrollbar ${
-						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-md sm:text-base h-auto p-2 px-5 w-full overflow-scroll text-md focus:outline-none" : "transition-colors transition duration-700 ease-in-out font-bold text-md sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-md focus:outline-none"
+						      className={`p-2 max-w-xs  break-words whitespace-pre-wrap sm:max-w-xl no-scrollbar ${
+						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full overflow-scroll text-sm focus:outline-none rounded-md" : "transition-colors transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"
 						      }`}
 						    >
 						    
@@ -138,44 +168,34 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 							>
 							  {c.content}
 							</ReactMarkdown>
-
+							
 						    </div>
 						  </div>
 						 </div>
 						))}
-					</div>
-						      <form onSubmit={(e) => { 
-					  e.preventDefault();
-					  handleGettingMessage(); 
-					}}>
-					<div className="w-full absolute bottom-0 left-0 sm:relative flex justify-center">
-					<div className="w-full flex justify-center w-auto m-5 mt-5 p-2 border border-solid border-white shadow-gray shadow-md/10 rounded-lg">
-						
-						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
-			              <FaLock size={15} />
-			            </button>
-						<input type="text"
-			              placeholder="Ask me anything!"
-			              value={message}
-			              onChange={e => setMessage(e.target.value)}
-			              type="text"
-			              aria-describedby="helper-text-explanation" 
-			              className="transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-md sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-[15px] focus:outline-none"/>
-			            <button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
-			              <FaPaperclip size={15} />
-			            </button>
-			            <button type="submit"  className="rounded-md ml-2 w-12 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
-			              <FaPaperPlane size={15} />
-			            </button>
-						      
-					</div>
-					</div>
-				</form>
+						<div className="h-30"/>
+						<div ref={endRef}/>
 				</div>
+		
+		</div>
+		
+		{/*
+			<div className="bg-black w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
+				
+				<div className="flex justify-center bg-transparent pt-5">
+				{init === false ? (<h3 className="font-bold text-gray-500 sm:w-auto break-words whitespace-pre-wrap max-w-xs text-center">Welcome to Gethonis, the perfect squad!</h3>) : ("") }
+				</div>
+				<div className="w-full sm:pt-0 flex justify-center">
+					<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
+						
+							      
+					</div>
 
-			</div>
-			</div>
-		</section>
+				</div>
+				</div>
+			</div> 
+		*/}
+				</>
 	);
 }
 
