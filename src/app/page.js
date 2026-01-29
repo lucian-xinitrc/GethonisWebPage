@@ -78,14 +78,14 @@ export default function Home() {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="mt-8 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"
+                className="mt-8 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none text-white"
               />
               <input 
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-5 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 mb-5 w-full mr-2 sm:text-sm focus:outline-none"
+                className="mt-5 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 mb-5 w-full mr-2 sm:text-sm focus:outline-none text-white"
               />
               <div className="flex justify-center">
                 <button type="submit" className="w-full rounded-lg shadow-white shadow-md/10 mt-5 bg-gray-300 border text-black border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base h-10 px-10 sm:text-[15px]">
@@ -100,21 +100,21 @@ export default function Home() {
                 placeholder="Username"
                 value={usernameSign}
                 onChange={(e) => setUsernameSign(e.target.value)}
-                className="mt-8 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-md sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"
+                className="mt-8 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-md sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none text-white"
               />
               <input 
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-5 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"
+                className="mt-5 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none text-white"
               />
               <input 
                 type="password"
                 placeholder="Password"
                 value={passwordSign}
                 onChange={(e) => setPasswordSign(e.target.value)}
-                className="mt-5 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 mb-5 w-full mr-2 sm:text-sm focus:outline-none"
+                className="mt-5 rounded-lg shadow-white shadow-xs/10 border shadow-white border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 mb-5 w-full mr-2 sm:text-sm focus:outline-none text-white"
               />
               <div className="flex justify-center">
                 <button type="submit" className="w-full rounded-lg shadow-white shadow-md/10 mt-5 bg-gray-300 border text-black border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base h-10 px-10 sm:text-[15px]">

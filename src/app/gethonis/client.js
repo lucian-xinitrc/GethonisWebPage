@@ -49,12 +49,13 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 
 	    */
 
-	    const result = await fetch("/api/gethonisAPI", {
-	    	method: "POST",
-	    	headers: { "Content-Type": "application/json" },
-	    	body: JSON.stringify({
-	      		messages: updatedChat.slice(0, -1),
-	    	}),
+	    const result = await fetch(
+	    	"/api/gethonisAPI", {
+		    	method: "POST",
+		    	headers: { "Content-Type": "application/json" },
+		    	body: JSON.stringify({
+		      		messages: updatedChat.slice(0, -1),
+		    	}),
 	  	}); 
   		
 	    const raw = await result.json();
@@ -124,11 +125,11 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 			              onChange={e => setMessage(e.target.value)}
 			              type="text"
 			              aria-describedby="helper-text-explanation" 
-			              className="transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"/>
+			              className="transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none text-white"/>
 			            <button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[14px]">
 			              <FaPaperclip size={15} />
 			            </button>
-			            <button type="submit"  className="rounded-full ml-2 w-20 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+			            <button type="submit"  className="text-white rounded-full ml-2 w-20 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaPaperPlane size={15} />
 			            </button>
 						      
@@ -136,7 +137,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					</div>
 				</form>
 				</div>
-				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} mt-[20%] sm:mt-[10%] p-5 sm:mx-[30%] sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
+				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} text-white mt-[20%] sm:mt-[10%] p-5 sm:mx-[30%] sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
 					{chat.map((c, i) => (
 						<div key={i} className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-5`}>	
 						  <div>
@@ -153,7 +154,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 							    code({node, inline, className, children, ...props}) {
 							      return !inline ? (
 							        <pre
-							          className="max-h-700 overflow-y-auto no-scrollbar bg-neutral-950 border border-white/[.145] text-white rounded-md p-5 my-5 text-md"
+							          className="text-white max-h-700 overflow-y-auto no-scrollbar bg-neutral-950 border border-white/[.145] text-white rounded-md p-5 my-5 text-md"
 							          {...props}
 							        >
 							          <code className={className}>
@@ -161,7 +162,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 							          </code>
 							        </pre>
 							      ) : (
-							        <code className={`bg-gray-200 px-1 rounded`} {...props}>
+							        <code className={`text-white bg-gray-200 px-1 rounded`} {...props}>
 							          {children}
 							        </code>
 							      );
