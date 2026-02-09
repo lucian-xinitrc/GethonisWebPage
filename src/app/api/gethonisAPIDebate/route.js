@@ -1,5 +1,4 @@
 'use server';
-
 import { NextResponse } from 'next/server';
 import { decrypt, encrypt } from '../crypto.js';
 import { Pool } from "pg";
@@ -11,12 +10,9 @@ const pool = new Pool({
 });
 
 export async function POST(req) {
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
   try {
     const {messages} = await req.json();
-    const gethonis = await fetch('https://api.gethonis.com/api/gethonis', {
+    const gethonis = await fetch('https://api.gethonis.com/api/gethonisDebate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

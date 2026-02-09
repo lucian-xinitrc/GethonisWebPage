@@ -15,41 +15,53 @@ export default function Home() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username,
-        password
-      }),
-    });
+    if(username && password){
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password
+        }),
+      });
 
-    if(res.ok) {
-      router.push("/gethonis");
+      if(res.ok) {
+        router.push("/gethonis");
+      } else {
+        alert("Invalid Login");
+      }
     } else {
-      alert("Invalid Login");
+      setUsername("");
+      setPassword("");
+      alert("Fields cannot be empty!");
     }
   }
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        usernameSign,
-        email,
-        passwordSign
-      }),
-    });
-
-    if(res.ok) {
-      setType(true);
-      const data = await res.json();
-      alert(data['message']);
+    if(usernameSign && email && passwordSign){
+        const res = await fetch("/api/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usernameSign,
+            email,
+            passwordSign
+          }),
+        });
+        if(res.ok) {
+          setType(true);
+          const data = await res.json();
+          alert(data['message']);
+        } else {
+          const data = await res.json();
+          alert(data['message']);
+        }
     } else {
-      const data = await res.json();
-      alert(data['message']);
+      setUsernameSign("");
+      setEmail("");
+      setPasswordSign("");
+      alert("Fields cannot be empty!");
     }
   }
 

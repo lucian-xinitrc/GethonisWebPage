@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 
 const Dash = ({ id, username, token, gethoniskey}) => {
   	const chatContainerRef = useRef(null);
+  	const [checked, setChecked] = useState(false);
   	const [chat, setChat] = useState([]);
   	const [message, setMessage] = useState("");
   	const [init, setInit] = useState(false);
@@ -32,32 +33,16 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 	  	];
 	  	setChat(updatedChat);
 	  	setMessage("");
-
-	    /*
-
-		    const res = await fetch('https://api.gethonis.com/api/gethonis', {
-		      method: 'POST',
-		      headers: {
-		        'Content-Type': 'application/json',
-		      },
-		      body: JSON.stringify({
-		        headers: gethoniskey,
-		        messages: updatedChat.slice(0, -1),
-		        stream: true
-		      }),
-		    });
-
-	    */
-
-	    const result = await fetch(
-	    	"/api/gethonisAPI", {
-		    	method: "POST",
-		    	headers: { "Content-Type": "application/json" },
-		    	body: JSON.stringify({
-		      		messages: updatedChat.slice(0, -1),
-		    	}),
+	  	const location = (checked) ? "/api/gethonisAPIDebate" : "/api/gethonisAPI";
+	  	const result = await fetch(
+		    location, {
+			    method: "POST",
+			    headers: { "Content-Type": "application/json" },
+			   	body: JSON.stringify({
+			    messages: updatedChat.slice(0, -1),
+			}),
 	  	}); 
-  		
+	    
 	    const raw = await result.json();
 	    const data = raw.message;
 	  	let botMessage = data;
@@ -74,17 +59,6 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 	      		msg === placeholder ? { ...msg, content: botMessage } : msg
 	    	)
 	  	);
-
-	  	/* 
-	  	const result = await fetch("/api/saveChat", {
-	    	method: "POST",
-	    	headers: { "Content-Type": "application/json" },
-	    	body: JSON.stringify({
-	      		id,
-	      		messages: chat
-	    	}),
-	  	}); 
-	  	*/
 	};
 
 	useEffect(() => {
@@ -97,11 +71,11 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 	}, [chat]);
 	return (
 		<>
-		<div className={` ${init === false ? "h-screen" : "h-auto"} bg-black w-auto overflow-hidden content-center no-scrollbar`}>
+		<div className={` ${init === false ? "h-screen" : "h-auto"} bg-black w-auto overflow-hidden content-center no-scrollbar font-sans`}>
 			<div className={` ${init === false ? "" : "align-center fixed absolute"} w-full flex justify-center bg-black pt-3 pb-3 shadow-black shadow-lg/30`}>
+				
 				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
-				<h1 className="text-[#1793d1] font-bold pt-2 pl-2 text-3xl font-monospace">Gethonis</h1>
-					
+				<h1 className="text-[#1793d1] font-extrabold pt-2 pl-2 text-3xl font-sans">Gethonis {checked ? (<span className="bg-red border border-red-400 text-red-400 text-xs font-medium px-1.5 py-0.5 rounded top-0">Debate Mode</span>) : ""}</h1>
 
 			</div>
 		<div className="flex justify-center bg-transparent pt-5">
@@ -119,6 +93,10 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
 			            </button>
+			            <div className="text-white rounded-full ml-2 w-auto px-5 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+							<label class=" text-sm text-gray-900 dark:text-gray-300 weight=bold">Debate</label>
+							<input id="default-checkbox" type="checkbox" value="" checked={checked} onChange={e => setChecked(e.target.checked)} className="w-4 h-4 ml-1 rounded-full text-blue-600 bg-transparent" />
+						</div>
 						<input type="text"
 			              placeholder="Ask me anything!"
 			              value={message}
@@ -149,28 +127,39 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 						    >
 						    
 						    <ReactMarkdown
-							  remarkPlugins={[remarkGfm]}
-							  components={{
-							    code({node, inline, className, children, ...props}) {
-							      return !inline ? (
-							        <pre
-							          className="text-white max-h-700 overflow-y-auto no-scrollbar bg-neutral-950 border border-white/[.145] text-white rounded-md p-5 my-5 text-md"
-							          {...props}
-							        >
-							          <code className={className}>
-							            {children}
-							          </code>
-							        </pre>
-							      ) : (
-							        <code className={`text-white bg-gray-200 px-1 rounded`} {...props}>
-							          {children}
-							        </code>
-							      );
-							    }
-							  }}
-							>
-							  {c.content}
-							</ReactMarkdown>
+					            remarkPlugins={[remarkGfm]}
+					            components={{
+					              p: ({children}) => (
+					                <p className="mb-3 last:mb-0 leading-7">{children}</p>
+					              ),
+
+					              ul: ({children}) => (
+					                <ul className="list-disc pl-6 mb-3 space-y-1">{children}</ul>
+					              ),
+
+					              ol: ({children}) => (
+					                <ol className="list-decimal pl-6 mb-3 space-y-1">{children}</ol>
+					              ),
+
+					              code({inline, className, children, ...props}) {
+					                if (inline) {
+					                  return (
+					                    <code className="bg-neutral-800 px-1.5 py-0.5 rounded text-sm">
+					                      {children}
+					                    </code>
+					                  );
+					                }
+
+					                return (
+					                  <pre className="bg-black/60 border border-white/10 rounded-lg p-4 my-4 overflow-x-auto text-sm">
+					                    <code className={className}>{children}</code>
+					                  </pre>
+					                );
+					              }
+					            }}
+					          >
+					            {c.content}
+					          </ReactMarkdown>
 							
 						    </div>
 						  </div>
@@ -181,21 +170,6 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 				</div>
 		
 		</div>
-		
-		{/*
-			<div className="bg-black w-screen h-[100dvh] overflow-hidden content-center no-scrollbar">
-				
-				
-				<div className="w-full sm:pt-0 flex justify-center">
-					<div className="w-full sm:w-3xl h-auto p-2 sm:p-5 rounded-lg ">
-						
-							      
-					</div>
-
-				</div>
-				</div>
-			</div> 
-		*/}
 				</>
 	);
 }
