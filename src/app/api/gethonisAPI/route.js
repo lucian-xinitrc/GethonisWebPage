@@ -2,6 +2,7 @@
 
 import { NextResponse } from 'next/server';
 import { decrypt, encrypt } from '../crypto.js';
+import { encryptMsg } from '../cryptoMsg.js';
 import { Pool } from "pg";
 
 

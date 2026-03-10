@@ -93,9 +93,9 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
 			            </button>
-			            <div className="text-white rounded-full ml-2 w-auto px-5 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
-							<label class=" text-sm text-gray-900 dark:text-gray-300 weight=bold">Debate</label>
-							<input id="default-checkbox" type="checkbox" value="" checked={checked} onChange={e => setChecked(e.target.checked)} className="w-4 h-4 ml-1 rounded-full text-blue-600 bg-transparent" />
+			            <div className="text-white rounded-full ml-1 w-auto px-5 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+							<label className="text-sm text-gray-900 dark:text-gray-300 weight=bold">Debate</label>
+							<input id="default-checkbox" type="checkbox" value="" checked={checked} onChange={e => setChecked(e.target.checked)} className="w-4 h-4 ml-1 rounded-full text-blue-600 bg-black" />
 						</div>
 						<input type="text"
 			              placeholder="Ask me anything!"
