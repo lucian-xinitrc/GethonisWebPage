@@ -10,8 +10,11 @@ const pool = new Pool({
 });
 
 export async function POST(req) {
+	return NextResponse.json({
+		message: "Succesfully registered!",
+	});
 	try {
-		const {usernameSign, email, passwordSign} = await req.json();
+		//const {usernameSign, email, passwordSign} = await req.json();
 		const Username = usernameSign;
 		const encEmail = encrypt(email);
 		const encPassword = encrypt(passwordSign);

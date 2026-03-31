@@ -88,26 +88,30 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					  handleGettingMessage(); 
 					}}>
 					
-					<div className="sm:w-[700px] bg-black flex justify-center mt-5 p-2 border border-solid border-white/[.145] ransition duration-700 ease-in-out hover:shadow-white/[.145] shadow-lg/30 rounded-full">
+					<div className="mx-1 sm:w-[700px] bg-black flex justify-center mt-5 p-2 border border-solid border-white/[.145] ransition duration-700 ease-in-out hover:shadow-white/[.145] shadow-lg/30 rounded-2xl">
 						
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
 			            </button>
-			            <div className="text-white rounded-full ml-1 w-auto px-5 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
-							<label className="text-sm text-gray-900 dark:text-gray-300 weight=bold">Debate</label>
-							<input id="default-checkbox" type="checkbox" value="" checked={checked} onChange={e => setChecked(e.target.checked)} className="w-4 h-4 ml-1 rounded-full text-blue-600 bg-black" />
+			            <div className="text-white rounded-full ml-1 w-auto px-5 h-10 overflow-hidden text-white hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+							<label className="inline-flex sm:items-center cursor-pointer">
+							  <input id="default-checkbox" type="checkbox" checked={checked} onChange={e => setChecked(e.target.checked)}  className="sr-only peer"/>
+							  <div className="border border-white relative w-9 h-5.5 bg-neutral-quaternary outline-none peer-focus:outline-none peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand outline-none"></div>
+							  <span className="select-none ms-1 sm:ms-3 text-sm font-medium text-heading">Debate</span>
+							</label>
 						</div>
-						<input type="text"
+						<textarea type="text"
 			              placeholder="Ask me anything!"
 			              value={message}
 			              onChange={e => setMessage(e.target.value)}
 			              type="text"
 			              aria-describedby="helper-text-explanation" 
-			              className="transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none text-white"/>
+			              className="min-h-10 transition-colors flex items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-base h-10 p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none text-white no-scrollbar">
+			            </textarea>
 			            <button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[14px]">
 			              <FaPaperclip size={15} />
 			            </button>
-			            <button type="submit"  className="text-white rounded-full ml-2 w-20 h-10 overflow-hidden border text-white border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+			            <button type="submit"  className="text-white rounded-full ml-2 w-20 h-10 overflow-hidden border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaPaperPlane size={15} />
 			            </button>
 						      
@@ -115,14 +119,15 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					</div>
 				</form>
 				</div>
-				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} text-white mt-[20%] sm:mt-[10%] p-5 sm:mx-[30%] sm:p-10 overflow-scroll rounded-lg no-scrollbar`}>
+				<div className="w-full flex justify-center">
+				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} text-white mt-[20%] sm:mt-[10%] p-5 w-[80%] lg:w-[50%] sm:w-[80%] sm:p-10 overflow-scroll rounded-lg no-scrollbar `}>
 					{chat.map((c, i) => (
 						<div key={i} className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-5`}>	
 						  <div>
 						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-sm font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-solid text-heading text-sm font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
 						      className={`p-2 max-w-xs  break-words whitespace-pre-wrap sm:max-w-xl no-scrollbar ${
-						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-sm h-auto p-2 px-5 w-full overflow-scroll text-sm focus:outline-none rounded-md" : "transition-colors transition duration-700 ease-in-out font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none"
+						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-sm h-auto p-2 px-5 w-full overflow-scroll text-sm focus:outline-none border border-solid border-white/[.145] transition duration-700 ease-in-out rounded-2xl" : "transition-colors font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none border border-solid border-white/[.145] transition duration-700 ease-in-out rounded-2xl py-3"
 						      }`}
 						    >
 						    
@@ -151,7 +156,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 					                }
 
 					                return (
-					                  <pre className="bg-black/60 border border-white/10 rounded-lg p-4 my-4 overflow-x-auto text-sm">
+					                  <pre className="bg-black/60 border border-white/10 rounded-lg p-4 my-4 overflow-x-auto text-sm fancy-scrollbar">
 					                    <code className={className}>{children}</code>
 					                  </pre>
 					                );
@@ -168,6 +173,7 @@ const Dash = ({ id, username, token, gethoniskey}) => {
 						<div className="h-30"/>
 						<div ref={endRef}/>
 				</div>
+			</div>
 		
 		</div>
 				</>
