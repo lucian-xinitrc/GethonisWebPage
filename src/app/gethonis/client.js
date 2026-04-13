@@ -162,7 +162,7 @@ const Dash = ({ id, username, token, gethoniskey, chatFromDb}) => {
 				</form>
 				</div>
 				<div className="w-full flex justify-center">
-				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} text-white mt-[20%] sm:mt-[10%] p-5 w-[80%] lg:w-[50%] sm:w-[80%] sm:p-10 overflow-scroll rounded-lg no-scrollbar `}>
+				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} text-white mt-[20%] sm:mt-[10%] p-5 lg:w-[700px] sm:w-[900px] sm:p-2 overflow-scroll rounded-lg no-scrollbar `}>
 					{chat.map((c, i) => (
 						<div key={i} className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-5`}>	
 						  <div>
