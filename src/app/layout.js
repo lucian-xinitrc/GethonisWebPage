@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Gethonis",
-  description: "Coded by LuciaN",
+  description: "Coded by Lucian",
 };
 
 export default function RootLayout({ children }) {
