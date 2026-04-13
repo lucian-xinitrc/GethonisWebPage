@@ -5,60 +5,102 @@ import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const Dash = ({ id, username, token, gethoniskey}) => {
+const Dash = ({ id, username, token, gethoniskey, chatFromDb}) => {
   	const chatContainerRef = useRef(null);
+  	const [convId, setConvId] = useState();
   	const [checked, setChecked] = useState(false);
+  	const [status, setStatus] = useState(true);
   	const [chat, setChat] = useState([]);
   	const [message, setMessage] = useState("");
   	const [init, setInit] = useState(false);
-
+  	let i = 0;
   	const endRef = useRef(null);
 
-	  useEffect(() => {
-	    endRef.current?.scrollIntoView({
+	useEffect(() => {
+	  	endRef.current?.scrollIntoView({
 	      behavior: "smooth",
 	      block: "end",
 	    });
-	  }, [chat]);
+	}, [chat]);
+
+	useEffect(() => {
+	  if (chatFromDb && chatFromDb.length > 0) {
+	    setChat(chatFromDb);
+	    setInit(true);
+	  }
+	}, [chatFromDb]);
+
 	const handleGettingMessage = async () => {
-		setInit(true);
-	  	if (!message.trim()) return;
+	  setInit(true);
 
-	  	const placeholder = { role: "assistant", content: "Thinking..." };
+	  if (!message.trim()) return;
 
-	  	const updatedChat = [
-	    	...chat,
-	    	{ role: "user", content: message },
-	    	placeholder
-	  	];
-	  	setChat(updatedChat);
-	  	setMessage("");
-	  	const location = (checked) ? "/api/gethonisAPIDebate" : "/api/gethonisAPI";
-	  	const result = await fetch(
-		    location, {
-			    method: "POST",
-			    headers: { "Content-Type": "application/json" },
-			   	body: JSON.stringify({
-			    messages: updatedChat.slice(0, -1),
-			}),
-	  	}); 
-	    
-	    const raw = await result.json();
-	    const data = raw.message;
-	  	let botMessage = data;
-	  	if (typeof botMessage === "string" && botMessage.startsWith("[")) {
-	    	try {
-	      		const parsed = JSON.parse(botMessage);
-	      		if (Array.isArray(parsed)) 
-	      			botMessage = parsed.join("");
-	    	} catch {}
-	  	}
+	  const userMessage = { role: "user", content: message };
+	  const placeholder = { role: "assistant", content: "Thinking..." };
 
-	  	setChat(prev =>
-	    	prev.map(msg =>
-	      		msg === placeholder ? { ...msg, content: botMessage } : msg
-	    	)
-	  	);
+	  // build chat optimist
+	  const updatedChat = [...chat, userMessage, placeholder];
+
+	  setChat(updatedChat);
+	  setMessage("");
+
+	  const location = checked
+	    ? "/api/gethonisAPIDebate"
+	    : "/api/gethonisAPI";
+
+	  const result = await fetch(location, {
+	    method: "POST",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify({
+	      messages: updatedChat.slice(0, -1),
+	    }),
+	  });
+
+	  const raw = await result.json();
+	  let botMessage = raw.message;
+
+	  // 🔥 FIX: normalize array response ["text"] -> "text"
+	  if (Array.isArray(botMessage)) {
+	    botMessage = botMessage.join(" ");
+	  }
+
+	  if (typeof botMessage === "string" && botMessage.startsWith("[")) {
+	    try {
+	      const parsed = JSON.parse(botMessage);
+	      if (Array.isArray(parsed)) {
+	        botMessage = parsed.join(" ");
+	      }
+	    } catch {}
+	  }
+
+	  const placeholderIndex = updatedChat.length - 1;
+
+	  setChat(prev => {
+	    const copy = [...prev];
+
+	    if (copy[placeholderIndex]) {
+	      copy[placeholderIndex] = {
+	        role: "assistant",
+	        content: botMessage,
+	      };
+	    }
+
+	    return copy;
+	  });
+
+	  const finalChat = [
+	    ...updatedChat.slice(0, -1),
+	    { role: "assistant", content: botMessage },
+	  ];
+
+	  await fetch("/api/saveChat", {
+	    method: "POST",
+	    headers: { "Content-Type": "application/json" },
+	    body: JSON.stringify({
+	      id,
+	      conversation: finalChat,
+	    }),
+	  });
 	};
 
 	useEffect(() => {
