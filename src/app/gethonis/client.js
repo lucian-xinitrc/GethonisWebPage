@@ -113,8 +113,8 @@ const Dash = ({ id, username, token, gethoniskey, chatFromDb}) => {
 	}, [chat]);
 	return (
 		<>
-		<div className={` ${init === false ? "h-screen" : "h-auto"} bg-black w-auto overflow-hidden content-center no-scrollbar font-sans`}>
-			<div className={` ${init === false ? "" : "align-center fixed absolute"} w-full flex justify-center bg-black pt-3 pb-3 shadow-black shadow-lg/30`}>
+		<div className={` ${init === false ? "h-screen" : "h-auto"} bg-[#141414] w-auto overflow-hidden content-center no-scrollbar font-sans`}>
+			<div className={` ${init === false ? "" : "align-center fixed absolute"} w-full flex justify-center bg-[#141414] pt-3 pb-3 shadow-[#141414] shadow-lg/30`}>
 				
 				<Image src="/images/logo.png" alt="Imagine full screen" className="rounded-[5px] shadow-xl/30" width={50} height={50}/>
 				<h1 className="text-[#1793d1] font-extrabold pt-2 pl-2 text-3xl font-sans">Gethonis {checked ? (<span className="bg-red border border-red-400 text-red-400 text-xs font-medium px-1.5 py-0.5 rounded top-0">Debate Mode</span>) : ""}</h1>
@@ -130,7 +130,7 @@ const Dash = ({ id, username, token, gethoniskey, chatFromDb}) => {
 					  handleGettingMessage(); 
 					}}>
 					
-					<div className="mx-1 sm:w-[700px] bg-black flex justify-center mt-5 p-2 border border-solid border-white/[.145] ransition duration-700 ease-in-out hover:shadow-white/[.145] shadow-lg/30 rounded-2xl">
+					<div className="mx-1 sm:w-[700px] bg-[#141414] flex justify-center mt-5 p-2 border border-solid border-white/[.145] ransition duration-700 ease-in-out hover:shadow-white/[.145] shadow-lg/30 rounded-2xl">
 						
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
@@ -162,14 +162,14 @@ const Dash = ({ id, username, token, gethoniskey, chatFromDb}) => {
 				</form>
 				</div>
 				<div className="w-full flex justify-center">
-				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} text-white mt-[20%] sm:mt-[10%] p-5 lg:w-[700px] sm:w-[900px] sm:p-2 overflow-scroll rounded-lg no-scrollbar `}>
+				<div ref={chatContainerRef} className={` ${init === false ? "hidden" : "block"} text-white mt-[20%] sm:mt-[10%] p-5 w-[80%] lg:w-[50%] sm:w-[80%] sm:p-10 overflow-scroll rounded-lg no-scrollbar `}>
 					{chat.map((c, i) => (
 						<div key={i} className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-5`}>	
 						  <div>
 						  <b className={`flex ${c.role === "user" ? "justify-end" : "justify-start"} mb-2`}>{c.role === "user" ? (<span className="bg-neutral-primary-soft border border-default text-heading text-sm font-medium px-1.5 py-0.5 rounded">{username}</span>) : (<span className="bg-neutral-primary-soft border border-solid text-heading text-sm font-medium px-1.5 py-0.5 rounded">Gethonis</span>)}</b>
 						    <div
 						      className={`p-2 max-w-xs  break-words whitespace-pre-wrap sm:max-w-xl no-scrollbar ${
-						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-sm h-auto p-2 px-5 w-full overflow-scroll text-sm focus:outline-none border border-solid border-white/[.145] transition duration-700 ease-in-out rounded-2xl" : "transition-colors font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none border border-solid border-white/[.145] transition duration-700 ease-in-out rounded-2xl py-3"
+						        c.role === "user" ? "transition-colors bg-blue-900 border border-solid border-white/[.145] items-center justify-center transition duration-700 ease-in-out font-bold text-sm sm:text-sm h-auto p-2 px-5 w-full overflow-scroll text-sm focus:outline-none border border-solid border-white/[.145] transition duration-700 ease-in-out rounded-2xl" : "bg-[#292929] transition-colors font-bold text-sm sm:text-base h-auto p-2 px-5 w-full mr-2 sm:text-sm focus:outline-none border border-solid border-white/[.145] transition duration-700 ease-in-out rounded-2xl py-3"
 						      }`}
 						    >
 						    
