@@ -25,93 +25,93 @@ export default async function Gethonis() {
 		const ver = verify.rows[0];
 		if(tokenCookie === ver.token) {
 			const getChat = await pool.query(
-  "SELECT content FROM public.conversations WHERE user_id = $1",
-  [idCookie]
-);
-
-const raw = getChat.rows[0]?.content;
-
-// 🔴 CASE 1: no row at all
-if (!raw) {
-  return (
-    <Dash
-      id={idCookie}
-      username={usernameCookie}
-      token={tokenCookie}
-      gethoniskey={gethonisKey}
-      chatFromDb={[]}
-    />
-  );
-}
-
-// 🔴 CASE 2: jsonb vs string safety
-let data = raw;
-
-if (typeof data === "string") {
-  try {
-    data = JSON.parse(data);
-  } catch {
-    return (
-      <Dash {...props} chatFromDb={[]} />
+      "SELECT content FROM public.conversations WHERE user_id = $1",
+      [idCookie]
     );
-  }
-}
 
-// 🔴 CASE 3: empty object in DB (FOARTE IMPORTANT)
-if (
-  !data ||
-  Object.keys(data).length === 0 ||
-  !data.iv ||
-  !data.encryptedData
-) {
-  return (
-    <Dash
-      id={idCookie}
-      username={usernameCookie}
-      token={tokenCookie}
-      gethoniskey={gethonisKey}
-      chatFromDb={[]}
-    />
-  );
-}
+      const raw = getChat.rows[0]?.content;
 
-// 🔥 decrypt
-let decrypted;
+      // 🔴 CASE 1: no row at all
+      if (!raw) {
+        return (
+          <Dash
+            id={idCookie}
+            username={usernameCookie}
+            token={tokenCookie}
+            gethoniskey={gethonisKey}
+            chatFromDb={[]}
+          />
+        );
+      }
 
-try {
-  decrypted = decrypt(data.encryptedData, data.iv);
-} catch (e) {
-  console.error("DECRYPT ERROR:", e);
-  return (
-    <Dash {...props} chatFromDb={[]} />
-  );
-}
+      // 🔴 CASE 2: jsonb vs string safety
+      let data = raw;
 
-// 🔥 parse chat
-let chatFromDb = [];
+      if (typeof data === "string") {
+        try {
+          data = JSON.parse(data);
+        } catch {
+          return (
+            <Dash {...props} chatFromDb={[]} />
+          );
+        }
+      }
 
-try {
-  const parsed = JSON.parse(decrypted);
-  chatFromDb = Array.isArray(parsed) ? parsed : [];
-} catch {
-  chatFromDb = [];
-}
+      // 🔴 CASE 3: empty object in DB (FOARTE IMPORTANT)
+      if (
+        !data ||
+        Object.keys(data).length === 0 ||
+        !data.iv ||
+        !data.encryptedData
+      ) {
+        return (
+          <Dash
+            id={idCookie}
+            username={usernameCookie}
+            token={tokenCookie}
+            gethoniskey={gethonisKey}
+            chatFromDb={[]}
+          />
+        );
+      }
 
-return (
-  <Dash
-    id={idCookie}
-    username={usernameCookie}
-    token={tokenCookie}
-    gethoniskey={gethonisKey}
-    chatFromDb={chatFromDb}
-  />
-);
-		} else {
-			redirect('/', RedirectType.push);
-		}
-	} catch (err) {
-		redirect('/', RedirectType.push);
-	}
-	
-	
-}
+      // 🔥 decrypt
+      let decrypted;
+
+      try {
+        decrypted = decrypt(data.encryptedData, data.iv);
+      } catch (e) {
+        console.error("DECRYPT ERROR:", e);
+        return (
+          <Dash {...props} chatFromDb={[]} />
+        );
+      }
+
+      // 🔥 parse chat
+      let chatFromDb = [];
+
+      try {
+        const parsed = JSON.parse(decrypted);
+        chatFromDb = Array.isArray(parsed) ? parsed : [];
+      } catch {
+        chatFromDb = [];
+      }
+
+      return (
+        <Dash
+          id={idCookie}
+          username={usernameCookie}
+          token={tokenCookie}
+          gethoniskey={gethonisKey}
+          chatFromDb={chatFromDb}
+        />
+      );
+      		} else {
+      			redirect('/', RedirectType.push);
+      		}
+      	} catch (err) {
+      		redirect('/', RedirectType.push);
+      	}
+      	
+      	
+      }

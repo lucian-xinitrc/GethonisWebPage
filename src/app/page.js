@@ -8,12 +8,14 @@ export default function Home() {
   const [ type, setType ] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loggage, setLoggage] = useState("Login");
 
   const [usernameSign, setUsernameSign] = useState("");
   const [email, setEmail] = useState("");
   const [passwordSign, setPasswordSign] = useState("");
 
   const handleLogin = async (e) => {
+    setLoggage("Logging in...");
     e.preventDefault();
     if(username && password){
       const res = await fetch("/api/login", {
@@ -33,6 +35,7 @@ export default function Home() {
     } else {
       setUsername("");
       setPassword("");
+
       alert("Fields cannot be empty!");
     }
   }
@@ -101,7 +104,7 @@ export default function Home() {
               />
               <div className="flex justify-center">
                 <button type="submit" className="w-full rounded-lg shadow-white shadow-md/10 mt-5 bg-gray-300 border text-black border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 font-bold sm:text-lg lg:text-sm h-10 sm:h-12 lg:h-10 px-10 ">
-                  Login
+                  {loggage}
                 </button>
               </div>
             </form>

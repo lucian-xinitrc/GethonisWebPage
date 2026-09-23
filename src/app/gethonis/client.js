@@ -135,11 +135,11 @@ const Dash = ({ id, username, token, gethoniskey, chatFromDb}) => {
 						<button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
 			              <FaLock size={15} />
 			            </button>
-			            <div className="text-white rounded-full ml-1 w-auto px-5 h-10 overflow-hidden text-white hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
-							<label className="inline-flex sm:items-center cursor-pointer">
+			            <div className="text-white rounded-full ml-1 w-auto px-5 h-10 overflow-hidden text-white hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
+							<label className="inline-flex sm:items-center cursor-pointer hover:text-lg">
 							  <input id="default-checkbox" type="checkbox" checked={checked} onChange={e => setChecked(e.target.checked)}  className="sr-only peer"/>
 							  <div className="border border-white relative w-9 h-5.5 bg-neutral-quaternary outline-none peer-focus:outline-none peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand outline-none"></div>
-							  <span className="select-none ms-1 sm:ms-3 text-sm font-medium text-heading">Debate</span>
+							  <span className="select-none ms-1 sm:ms-3 text-sm font-medium text-heading ">Debate</span>
 							</label>
 						</div>
 						<textarea type="text"
@@ -153,8 +153,8 @@ const Dash = ({ id, username, token, gethoniskey, chatFromDb}) => {
 			            <button className="hidden rounded-full w-12 h-10 overflow-hidden border text-white border border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[14px]">
 			              <FaPaperclip size={15} />
 			            </button>
-			            <button type="submit"  className="text-white rounded-full ml-2 w-20 h-10 overflow-hidden border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:bg-gray-100 hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-transparent font-bold text-sm sm:text-base  sm:text-[15px]">
-			              <FaPaperPlane size={15} />
+			            <button type="submit"  className="text-white text-smrounded-full ml-2 w-20 h-10 overflow-hidden border-solid hover:dark:border-white/[.145] border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center transition duration-700 ease-in-out hover:dark:text-lg font-bold ">
+			              <FaPaperPlane />
 			            </button>
 						      
 					
